@@ -1,38 +1,59 @@
 package leaf_similar_trees;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+   Consider all the leaves of a binary tree, from left to right order, the values of those leaves form a leaf value sequence.
+ */
 public class Solution {
+
     public static void main(String[] args) {
-        int[] arr = {2,-3,-1,5,-4};
-        int k = 2;
-        System.out.println((largestSumAfterKNegations(arr,k)));
+// root1 = [3,5,1,6,2,9,8,null,null,7,4]
+// root2 = [3,5,1,6,7,4,2,null,null,null,null,null,null,9,8]
+        TreeNode tr7 = new TreeNode(7);
+        TreeNode tr4 = new TreeNode(4);
+        TreeNode tr2 = new TreeNode(2,tr7,tr4);
+        TreeNode tr6 = new TreeNode(6);
+        TreeNode tr5 = new TreeNode(5,tr6,tr2);
+        TreeNode tr9 = new TreeNode(9);
+        TreeNode tr8 = new TreeNode(8);
+        TreeNode tr1 = new TreeNode(1,tr9,tr8);
+
+        TreeNode trr6 = new TreeNode(6);
+        TreeNode trr7 = new TreeNode(7);
+        TreeNode trr5 = new TreeNode(5,trr6,trr7);
+        TreeNode trr9 = new TreeNode(9);
+        TreeNode trr8 = new TreeNode(8);
+        TreeNode trr2 = new TreeNode(2,trr9,trr8);
+        TreeNode trr4 = new TreeNode(4);
+        TreeNode trr1 = new TreeNode(1,trr4,trr2);
+
+        TreeNode root1 = new TreeNode(3,tr5,tr1);
+        TreeNode root2 = new TreeNode(3,trr5,trr1);
+
+        leafSimilar(root1,root2);
+    }
+    public static boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        List<Integer> listRoot1  = new ArrayList<>();
+        List<Integer> listRoot2  = new ArrayList<>();
+        traversePreOrder(root1,listRoot1);
+        traversePreOrder(root2,listRoot2);
+        return listRoot1.equals(listRoot2);
     }
 
-    public static int largestSumAfterKNegations(int[] nums, int k) {
-        while (k != 0) {
-            int minEl = Arrays.stream(nums).min().getAsInt();
-            int index = indexOf(nums, minEl,0);
-            nums[index] = -minEl;
-            k -=1;
+    public static List<Integer> traversePreOrder(TreeNode node, List<Integer> list) {
+        if (node != null) {
+            visit(node, list);
+            traversePreOrder(node.left, list);
+            traversePreOrder(node.right, list);
         }
-        return Arrays.stream(nums).sum();
+        return list;
     }
-    public static int indexOf(int[] array, int valueToFind, int startIndex) {
-        if (array == null) {
-            return -1;
-        } else {
-            if (startIndex < 0) {
-                startIndex = 0;
-            }
 
-            for(int i = startIndex; i < array.length; ++i) {
-                if (valueToFind == array[i]) {
-                    return i;
-                }
-            }
-
-            return -1;
+    public static void visit(TreeNode node, List<Integer> list) {
+        if (node.left == null && node.right == null ) {
+            list.add(node.val);
         }
     }
 }
