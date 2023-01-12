@@ -1,4 +1,4 @@
-package maximize_sum_of_array_after_k_negations.fizz_buzz;
+package leaf_similar_trees;
 
 import java.util.Arrays;
 
