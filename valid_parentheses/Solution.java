@@ -17,17 +17,21 @@ public class Solution {
     public static boolean isValid(String s) {
         Stack <Character> stack = new Stack<>();
         for (char c : s.toCharArray()) {
-            if(c == '(' || c == '{' || c == '[' ){
+            if (s.length() == 1 || (stack.isEmpty() && (c == ')' || c == '}' || c == ']' ))){
+                return false;
+            }else if(c == '(' || c == '{' || c == '[' ){
                 stack.push(c);
             }else if (stack.isEmpty()){
-                return false;
+                continue;
             }else{
                 char last = stack.pop();
                 if ((last == '(' && c == ')') || (last == '{' && c == '}') || (last == '[' && c == ']')){
-                    return true;
+                    continue;
+                }else {
+                    return false;
                 }
             }
         }
-        return false;
+        return stack.isEmpty();
     }
 }
